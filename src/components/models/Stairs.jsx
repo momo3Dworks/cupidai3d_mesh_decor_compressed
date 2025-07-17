@@ -8,12 +8,13 @@ import {
 } from "three"
 import { useBg1Environment } from "../../utils/useSharedEnvironmentMaps"
 
+
 const useStairsMaterial = () => {
   const textures = useTexture({
     map: "/texture/stairsColor.avif",
-    normalMap: "/texture/stairs_Normal.avif",
-    alphaMap: "/texture/stairs_Alpha.avif",
-    roughnessMap: "/texture/stairs_Roughness.avif",
+    
+    
+    roughnessMap: "/texture/Ornaments_Roughness.avif",
   })
 
   const bg1Env = useBg1Environment()

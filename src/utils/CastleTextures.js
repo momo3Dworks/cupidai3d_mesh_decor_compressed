@@ -82,6 +82,8 @@ const useCastleTextures = () => {
     atmEmissive: "/texture/atmEmissive.avif",
     scrollColor: "/texture/ScrollColorV1.avif",
     stairsColor: "/texture/stairs_Color.avif",
+    stairsRoughness: "/texture/Ornaments_Roughness.avif"
+    
   })
 }
 
@@ -108,7 +110,8 @@ export const useStairsMaterial = () => {
 
   useMemo(() => {
     configureTextures({
-      castleColor: textures.stairsColor,
+      stairsColor: textures.stairsColor,
+      stairsRoughness: textures.stairsRoughness,
     
     })
   }, [textures])
@@ -120,7 +123,7 @@ export const useStairsMaterial = () => {
         NearestFilter
       textures.stairsColor.colorSpace = "srgb"
     }
-
+    
  
 
    
@@ -131,14 +134,15 @@ export const useStairsMaterial = () => {
   return useMemo(() => {
     return new MeshStandardMaterial({
       map: textures.stairsColor,
-      roughnessMap: textures.decorRoughness,
+      roughnessMap: textures.stairsRoughness,
       
       normalScale: new THREE.Vector2(0.5, 0.5),
       roughness: 0.1,
       metalness: 0.5,
       blending: NormalBlending,
+      normalMapType: THREE.ObjectSpaceNormalMap,
       envMap: bg1Env,
-      envMapIntensity: 1,
+      envMapIntensity: 1.5,
       side: DoubleSide,
       transparent: false,
     })

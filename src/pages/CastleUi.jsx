@@ -33,7 +33,12 @@ const NavigationButton = ({ onClick, children, className }) => (
   </button>
 )
 
-export const CastleUi = ({ section = 0, onSectionChange, cameraRef }) => {
+export const CastleUi = ({
+  section = 0,
+  onSectionChange,
+  cameraRef,
+  castleAnimationsRef,
+}) => {
   const [showAboutOverlay, setShowAboutOverlay] = useState(false)
   const [showDownloadOverlay, setShowDownloadOverlay] = useState(false)
   const [showAiDatingCoachOverlay, setShowAiDatingCoachOverlay] =
@@ -334,6 +339,11 @@ export const CastleUi = ({ section = 0, onSectionChange, cameraRef }) => {
     }
 
     setShowScrollOverlay(false)
+
+    // Reverse the scroll animation when returning from the scroll overlay
+    if (castleAnimationsRef && castleAnimationsRef.current) {
+      castleAnimationsRef.current.reverseScrollAnimation()
+    }
 
     // 🔥 ADICIONAR: Parar os sons específicos do scroll
     if (window.audioManager && window.audioManager.sounds.scroll) {

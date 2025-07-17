@@ -5,7 +5,7 @@ import * as THREE from "three"
 import FountainParticles from "../../components/models/FountainParticles"
 import Castle from "../../components/models/Castle"
 import { Flower } from "../../components/models/Flower"
-import { Stairs } from "../../components/models/Stairs"
+
 import Orb from "../../components/models/Orb"
 import { Pole } from "../../components/models/Pole"
 import { EffectsTree } from "../../components/helpers/EffectsTree"
@@ -139,7 +139,7 @@ const PrimaryContent = React.memo(
           isStarted={isStarted}
         />
         <Flower />
-        <Stairs />
+       
         <Orb />
         <Pole
           position={[-0.8, 0, 5.8]}

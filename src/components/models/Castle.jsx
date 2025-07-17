@@ -591,6 +591,7 @@ useMemo(() => {
     <CastleAnimationsHandler/>
       <Bow/>
       <Logo/>
+     
       <mesh
         geometry={nodes.stairs.geometry}
         material={stairsMaterial}
