@@ -43,7 +43,7 @@ const SecondaryContent = React.memo(({ isReady }) => {
 
   return (
     <>
-      <ambientLight intensity={2.3} color="#ffffff" />
+      <ambientLight intensity={2} color="#ffffff" />
       {/* ✅ CloudGroup renderiza sempre para ser detectado pelo useProgress */}
       <group ref={cloudGroupRef}>
         <CloudGroup
