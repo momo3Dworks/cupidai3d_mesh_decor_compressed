@@ -16,9 +16,14 @@ import RotateAxis from "../helpers/RotateAxis"
 import AtmIframe from "./AtmIframe"
 import MirrorIframe from "./MirrorIframe"
 import ScrollIframe from "./ScrolIframe"
+import CastleAnimationsHandler from "./CastleAnimationsHandler"
+import TextureAnimator from "./TextureAnimator"
+import Bow from "./Bow"
+import Logo from "./LogoCupid"
+
 
 import {
-  useCastleMaterial,
+ useCastleMaterial,
   useCastleHeartMaterial,
   useCastleHeartMaskMaterial,
   useCastleLightsMaterial,
@@ -39,6 +44,11 @@ import {
   useAtmMaterial,
   useAtmMetalMaterial,
   useScrollMaterial,
+  useCastleBase_WaterMaterial,
+  useCastleFirst_levelCascadeMaterial,
+  useCastleSecond_levelCascadeMaterial,
+  useCastleNewColumnsMaterial,
+  useStairsMaterial,
 } from "../../utils/CastleTextures"
 
 const SMALL_SCREEN_THRESHOLD = 768
@@ -414,9 +424,9 @@ const CastleModel = ({
   onWaterPlay,
   activeSection,
 }) => {
-  const { nodes } = useGLTF("/models/Castle.glb")
+  const { nodes } = useGLTF("/models/Castle_Decor_Anims.glb")
 
-  const material = useCastleMaterial()
+   const material = useCastleMaterial()
   const castleHeart = useCastleHeartMaterial()
   const castleHeartMask = useCastleHeartMaskMaterial()
   const castleLights = useCastleLightsMaterial()
@@ -437,6 +447,11 @@ const CastleModel = ({
   const mirror = useMirrorMaterial(activeSection)
   const hallosMaterial = useHallosMaterial()
   const wingsMaterial = useWingsMaterial()
+  const first_levelCascade = useCastleFirst_levelCascadeMaterial ()
+  const second_levelCascade = useCastleSecond_levelCascadeMaterial ()
+  const base_water = useCastleBase_WaterMaterial ()
+  const new_columns = useCastleNewColumnsMaterial()
+  const stairsMaterial = useStairsMaterial()
 
   const { texture: portalTexture, play: playPortal } = useVideoTexture(
     "/video/tunnel.mp4",
@@ -499,34 +514,46 @@ const CastleModel = ({
     scrollIframeActive
   )
 
-  const { texture: waterTexture, play: playWater } = useVideoTexture(
-    "/video/water.mp4",
-    {
-      loop: true,
-      muted: true,
-      playsInline: true,
-      preload: "metadata",
-    }
-  )
+useMemo(() => {
+    const materialsToRepeat = [
+      first_levelCascade,
+      second_levelCascade,
+      base_water,
+    ];
 
-  const waterMaterial = useMemo(
-    () =>
-      waterTexture
-        ? new MeshBasicMaterial({
-            map: waterTexture,
-            side: DoubleSide,
-            toneMapped: false,
-            fog: false,
-            transparent: false,
-            alphaTest: 0,
-            color: new Color(0xffffff),
-          })
-        : new MeshBasicMaterial({
-            color: 0x000000,
-            side: DoubleSide,
-          }),
-    [waterTexture]
-  )
+    materialsToRepeat.forEach(material => {
+      if (material) {
+        if (material.map) material.map.wrapS = THREE.RepeatWrapping;
+        if (material.alphaMap) material.alphaMap.wrapS = THREE.RepeatWrapping;
+        if (material.metalnessMap) material.metalnessMap.wrapS = THREE.RepeatWrapping;
+        if (material.roughnessMap) material.roughnessMap.wrapS = THREE.RepeatWrapping;
+        if (material.normalMap) material.normalMap.wrapS = THREE.RepeatWrapping;
+        if (material.transmissionMap) material.transmissionMap.wrapS = THREE.RepeatWrapping;
+        if (material.displacementMap) material.displacementMap.wrapS = THREE.RepeatWrapping;
+      }
+    });
+  }, [first_levelCascade, second_levelCascade, base_water]);
+
+
+  useFrame(({ camera }, delta) => {
+    updateSpatialSounds(camera.position)
+
+    const materialsToAnimate = [
+      { material: first_levelCascade, speed: 0.3 },
+      { material: second_levelCascade, speed: 0.3 },
+      { material: base_water, speed: 0.3 },
+    ];
+
+    materialsToAnimate.forEach(({ material, speed }) => {
+      if (material) {
+        if (material.map) material.map.offset.x += delta * speed;
+        if (material.alphaMap) material.alphaMap.offset.x += delta * speed;
+        if (material.metalnessMap) material.metalnessMap.offset.x += delta * speed;
+        if (material.roughnessMap) material.roughnessMap.offset.x += delta * speed;
+        if (material.normalMap) material.normalMap.offset.x += delta * speed;
+      }
+    });
+  });
 
   useEffect(() => {
     if (window.audioManager && window.audioManager.sounds) {
@@ -553,14 +580,55 @@ const CastleModel = ({
   useEffect(() => {
     if (hasInteracted) {
       playPortal()
-      playWater()
+      
       if (onPortalPlay) onPortalPlay()
-      if (onWaterPlay) onWaterPlay()
+      
     }
-  }, [hasInteracted, playPortal, playWater, onPortalPlay, onWaterPlay])
+  }, [hasInteracted, playPortal, onPortalPlay,])
 
   return (
     <group dispose={null}>
+    <CastleAnimationsHandler/>
+      <Bow/>
+      <Logo/>
+      <mesh
+        geometry={nodes.stairs.geometry}
+        material={stairsMaterial}
+        castShadow={false}
+        receiveShadow={false}
+      />
+   
+      <mesh geometry={nodes.new_columns.geometry}
+        material={new_columns}
+        
+      />
+      <mesh
+        geometry={nodes.first_levelCascade.geometry}
+        material={first_levelCascade}
+        morphTargetDictionary={nodes.first_levelCascade.morphTargetDictionary}
+   morphTargetInfluences={nodes.first_levelCascade.morphTargetInfluences}
+   transparent={true}
+   
+      />
+      <mesh
+        geometry={nodes.second_levelCascade.geometry}
+        material={second_levelCascade}
+        morphTargetDictionary={nodes.second_levelCascade.morphTargetDictionary}
+        morphTargetInfluences={nodes.second_levelCascade.morphTargetInfluences}
+      />
+      <mesh
+        geometry={nodes.base_water.geometry}
+        material={base_water}
+        morphTargetDictionary={nodes.base_water.morphTargetDictionary}
+        morphTargetInfluences={nodes.base_water.morphTargetInfluences}
+      />
+      <mesh
+        geometry={nodes.castle.geometry}
+        material={material}
+        layers-enable={1}
+        castShadow={false}
+        receiveShadow={false}
+      />
       <mesh
         geometry={nodes.castle.geometry}
         material={material}
@@ -616,28 +684,8 @@ const CastleModel = ({
         {...atmHandlers.pointerHandlers}
       />
       <mesh geometry={nodes.atmMetal.geometry} material={AtmMetalMaterial} />
-      <group position={[-0.056, 1.247, -2.117]}>
-        <RotateAxis axis="y" speed={0.7} rotationType="euler">
-          <mesh
-            geometry={nodes.bow.geometry}
-            material={bowMaterial}
-            castShadow={false}
-            receiveShadow={false}
-          />
-        </RotateAxis>
-      </group>
-      <group>
-        <RotateAxis axis="y" speed={1} rotationType="euler">
-          <mesh
-            geometry={nodes.LogoCupid.geometry}
-            material={logoMaterial}
-            position={[0.001, 4.18, -0.006]}
-            layers-enable={2}
-            castShadow={false}
-            receiveShadow={false}
-          />
-        </RotateAxis>
-      </group>
+    
+     
       <mesh
         geometry={nodes.scroll.geometry}
         material={scrollMaterial}
@@ -645,6 +693,8 @@ const CastleModel = ({
         receiveShadow={false}
         onClick={scrollHandlers.handleClick}
         {...scrollHandlers.pointerHandlers}
+         morphTargetDictionary={nodes.scroll.morphTargetDictionary}
+   morphTargetInfluences={nodes.scroll.morphTargetInfluences}
       />
       <Select disabled>
         <mesh
@@ -655,13 +705,7 @@ const CastleModel = ({
           receiveShadow={false}
         />
       </Select>
-      <mesh
-        geometry={nodes.water.geometry}
-        material={waterMaterial}
-        layers-enable={2}
-        castShadow={false}
-        receiveShadow={false}
-      />
+     
 
       <AtmIframe
         position={[1.675, 1.185, 0.86]}
