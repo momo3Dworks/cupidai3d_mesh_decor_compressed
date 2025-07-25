@@ -5,12 +5,12 @@ export const EffectsTree = () => {
   // Configurações fixas em vez de useControls
   const bloomConfig = {
     enabled: true,
-    luminanceThreshold: 1.1,
-    intensity: 7.5,
+    luminanceThreshold: 20.0,
+    intensity: 5.5,
     mipmapBlur: true,
     kernelSize: 4,
-    luminanceSmoothing: 0.94,
-    radius: 0.42,
+    luminanceSmoothing: 2.5,
+    radius: 2.5,
   }
 
   const effectsTree = useMemo(() => {
@@ -20,8 +20,9 @@ export const EffectsTree = () => {
           <Bloom
             {...bloomConfig}
             mipmapBlur={false}
-            kernelSize={2}
-            intensity={5}
+            kernelSize={4}
+            intensity={0.02}
+            
           />
         )}
       </EffectComposer>

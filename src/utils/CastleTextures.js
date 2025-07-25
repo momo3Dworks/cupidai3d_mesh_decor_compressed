@@ -41,39 +41,39 @@ const useCastleTextures = () => {
     base_waterNormal: "/texture/OCEAN Normal.001.avif",
 
     
-
-    castleColor: "/texture/castle_NewColor.avif",
-    castleRoughness: "/texture/castle_NewRoughness.avif",
-    castleMetallic: "/texture/castle_NewMetallic.avif",
-    newColumnsColor: "/texture/Columns_NewColor.avif",
-    newColumnsNormals: "/texture/ColumnsNewNormals1.avif", 
-    newColumnsRoughness: "/texture/Columns_NewRoughness.avif",
+    
+    castleColor: "/new_textures/castle Color.png",
+    castleRoughness: "/new_textures/castle Roughness.png",
+    castleMetallic: "/new_textures/castle Metallic.png",
+    newColumnsColor: "/new_textures/NewColumns Color.png",
+    newColumnsNormals: "/new_textures/NewColumns Normal.png", 
+    newColumnsRoughness: "/new_textures/NewColumns Roughness.png",
     castleHeartColor: "/texture/castleHeart_Base_colorAO.avif",
     castleLightsEmissive: "/texture/castleLights_Emissive.avif",
-    godsWallColor: "/texture/GodsWallColor.avif",
-    godsWallRoughness: "/texture/castleGodsWall_Roughness.avif",
+    godsWallColor: "/new_textures/castleGodsWalls Color.png",
+    godsWallRoughness: "/new_textures/castleGodsWalls Roughness.png",
     decorColor: "/texture/Ornaments_Color.avif",
     decorRoughness: "/texture/Ornaments_Roughness.avif",
     decorMetallic: "/texture/Ornaments_Metallic.avif",
     decorNormal: "/texture/AllDecorNormal_Alphas.avif",
     decorAlpha: "texture/Ornaments_alphas.avif",
-    wallsColor: "/texture/walls_NewColor.avif",
-    wallsRoughness: "/texture/walls_NewRoughness.avif",
+    wallsColor: "/new_textures/walls Color.png",
+    wallsRoughness: "/new_textures/walls Roughness.png",
     
-    pilarsColor: "/texture/castlePilars_Color.avif",
-    pilarsRoughness: "/texture/castlePilars_Roughness.avif",
-    pilarsMetallic: "/texture/castlePilars_Metallic.avif",
-    pilarsEmissive: "/texture/castlePilars_Emission.avif",
-    floorAO: "/texture/floor_NewColor.avif",
-    floorEmissive: "/texture/floorAO.avif",
-    floorRoughness: "/texture/floor_NewRoughness.avif", 
-    floorMetallic: "/texture/Ornaments_Roughness.avif",
-    floorHeartColor: "/texture/floorHeart_NewColor.avif",
-    floorHeartMetallic: "/texture/floorHeart_Metallic.avif",
-    floorHeartRoughness: "/texture/floorHeart_Roughness.avif",
-    floorHeartEmissive: "/texture/floorHeart_Emissive.avif",
-    wingsColor: "/texture/wingsColor_.avif",
-    wingsRoughness: "/texture/wingsRoughness.avif",
+    pilarsColor: "/new_textures/castlePilars Color.png",
+    pilarsRoughness: "/new_textures/castlePilars Roughness.png",
+    pilarsMetallic: "/new_textures/castlePilars Metallic.png",
+    pilarsEmissive: "/new_textures/castlePilars Emission Color.png",
+    floorAO: "/new_textures/floor Color.png",
+    floorEmissive: "/new_textures/floor Color.png",
+    floorRoughness: "/new_textures/floor Roughness.png", 
+    floorMetallic: "/new_textures/floor Metallic.png",
+    floorHeartColor: "/new_textures/FloorHeart Color.png",
+    floorHeartMetallic: "/new_textures/FloorHeart Metallic.png",
+    floorHeartRoughness: "/new_textures/FloorHeart Roughness.png",
+    floorHeartEmissive: "/new_textures/floorHeart_Emissive.png",
+    wingsColor: "/new_textures/wings Color.png",
+    wingsRoughness: "/new_textures/wings Roughness.png",
     godsColorAO: "/texture/godsColorAO.avif",
     hoofGlassColor: "/texture/hoofGlassColorBAO.avif",
     hoofGlassEmissive: "/texture/hoofGlassEmissiveV2.avif",
@@ -81,7 +81,7 @@ const useCastleTextures = () => {
     atmMetallic: "/texture/atmMetallicV1.avif",
     atmEmissive: "/texture/atmEmissive.avif",
     scrollColor: "/texture/ScrollColorV1.avif",
-    stairsColor: "/texture/stairs_Color.avif",
+    stairsColor: "/new_textures/stairs Color.png",
     stairsRoughness: "/texture/Ornaments_Roughness.avif"
     
   })
@@ -174,19 +174,19 @@ export const useCastleMaterial = () => {
       textures.castleRoughness.flipY = false
       textures.castleRoughness.minFilter = textures.castleRoughness.magFilter =
         NearestFilter
-      textures.castleRoughness.colorSpace = "srgb"
+        textures.floorMetallic.colorSpace = THREE.NoColorSpace
     }
     if (textures.castleMetallic) {
       textures.castleMetallic.flipY = false
       textures.castleMetallic.minFilter = textures.castleMetallic.magFilter =
         NearestFilter
-      textures.castleMetallic.colorSpace = "srgb"
+        textures.floorMetallic.colorSpace = THREE.NoColorSpace
     }
     if (textures.castleNormal) {
       textures.castleNormal.flipY = false
       textures.castleNormal.minFilter = textures.castleNormal.magFilter =
         NearestFilter
-      textures.castleNormal.colorSpace = "srgb"
+        textures.floorMetallic.colorSpace = THREE.NoColorSpace
     }
 
    
@@ -199,7 +199,7 @@ export const useCastleMaterial = () => {
       map: textures.castleColor,
       roughnessMap: textures.castleRoughness,
       metalnessMap: textures.castleMetallic,
-     
+      
       normalScale: new THREE.Vector2(0.5, 0.5),
       roughness: 0.2,
       metalness: 0,
@@ -235,8 +235,8 @@ export const useCastleNewColumnsMaterial = () => {
 
 
    
-    if (textures.newColumnNormals) {
-      textures.newColumnNormals.flipY = false
+    if (textures.newColumnsNormals) {
+      textures.newColumnsNormals.flipY = false
       textures.newColumnsNormals.minFilter = textures.newColumnsNormals.magFilter =
         NearestFilter
       textures.newColumnsNormals.colorSpace = "srgb"
@@ -257,7 +257,7 @@ export const useCastleNewColumnsMaterial = () => {
     return new MeshStandardMaterial({
       map: textures.newColumnsColor,
       roughnessMap: textures.newColumnsRoughness ,
-      
+      normalMap: textures.newColumnsNormals,
       normalScale: new THREE.Vector2(0.5, 0.5),
       roughness: 0.2,
       metalness: 0,
@@ -467,51 +467,50 @@ export const useCastleLightsMaterial = () => {
   )
 }
 
-export const usecastleGodsWallsMaterial = (
-  materialType = "standard",
-  metalness = 0.6,
-  roughness = 1.6
-) => {
+export const usecastleGodsWallsMaterial = () => {
   const textures = useCastleTextures()
   const bg1Env = useBg1Environment()
 
   useMemo(() => {
     configureTextures({
       godsWallColor: textures.godsWallColor,
-      godsWallRoughness: textures.godsWallRoughness,
+      godsWallsRoughness: textures.godsWallRoughness,
     })
   }, [textures])
 
-  return useMemo(() => {
-    const commonProps = {
-      map: textures.godsWallColor,
-      side: DoubleSide,
-      transparent: false,
+  useMemo(() => {
+    if (textures.godsWallColor) {
+      textures.godsWallColor.flipY = false
+      textures.godsWallColor.minFilter = textures.godsWallColor.magFilter =
+        NearestFilter
+      textures.godsWallColor.colorSpace = "srgb"
     }
 
-    const pbrProps = {
-      ...commonProps,
+    if (textures.godsWallRoughness) {
+      textures.godsWallRoughness.flipY = false
+      textures.godsWallRoughness.minFilter = textures.godsWallRoughness.magFilter =
+        NearestFilter
+      textures.godsWallRoughness.colorSpace = "srgb"
+    }
+
+   
+
+  }, [textures])
+
+  return useMemo(() => {
+    return new MeshStandardMaterial({
+      map: textures.godsWallColor,
       roughnessMap: textures.godsWallRoughness,
-      roughness: roughness,
-      metalness: metalness,
+      roughness: 0.2,
       blending: NormalBlending,
       envMap: bg1Env,
-      envMapIntensity: 2.5,
-    }
-
-    switch (materialType) {
-      case "physical":
-        return new MeshStandardMaterial(pbrProps)
-      case "basic":
-        return new MeshBasicMaterial({
-          ...commonProps,
-          color: new Color(0xffffff),
-        })
-      case "standard":
-      default:
-        return new MeshStandardMaterial(pbrProps)
-    }
-  }, [textures, materialType, metalness, roughness, bg1Env])
+      envMapIntensity: 1,
+      side: DoubleSide,
+      transparent: false,
+      alphaTest: 0.05,
+    
+    })
+  }, [textures, bg1Env])
 }
 
 export const useCastleWallsMaterial = () => {
@@ -548,15 +547,14 @@ export const useCastleWallsMaterial = () => {
     return new MeshStandardMaterial({
       map: textures.wallsColor,
       roughnessMap: textures.wallsRoughness,
-      roughness: 0.2,
+      roughness: 0.0,
       blending: NormalBlending,
       envMap: bg1Env,
       envMapIntensity: 1,
       side: DoubleSide,
       transparent: false,
       alphaTest: 0.05,
-      emissive: new Color("#FFFFFF"),
-      emissiveIntensity: 0.3,
+    
     })
   }, [textures, bg1Env])
 }
@@ -670,7 +668,8 @@ export const useFloorMaterial = () => {
       map: textures.floorAO,
       roughnessMap: textures.floorRoughness,
       metalnessMap: textures.floorHeartMetallic,
-     
+      emissiveMap: textures.floorAO,
+      emissiveIntensity: 2.5,
       roughness: 0.0,
       metalness: 1.3,
       blending: NormalBlending,

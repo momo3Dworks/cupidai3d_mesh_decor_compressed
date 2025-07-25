@@ -477,6 +477,7 @@ const CastleModel = ({
       })
     }
   }, [portalTexture])
+
   useFrame(({ camera }) => {
     updateSpatialSounds(camera.position)
   })
